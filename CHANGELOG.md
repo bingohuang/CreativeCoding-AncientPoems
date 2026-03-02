@@ -4,6 +4,36 @@
 
 ---
 
+## ✅ 2. Docker 多平台支持 (arm64 + amd64)
+
+### 新增功能
+- **多架构支持**: 同时支持 `linux/amd64` (x86_64) 和 `linux/arm64` (ARM64/Apple Silicon)
+- **build-multiarch.sh**: 新增多平台镜像构建脚本
+- **push.sh**: 新增镜像推送脚本
+
+### 镜像架构
+| 架构 | 说明 | 适用平台 |
+|-----|------|---------|
+| `linux/amd64` | x86_64 | Intel/AMD 处理器 |
+| `linux/arm64` | ARM64 | Apple Silicon (M1/M2/M3), ARM 服务器 |
+
+### 使用方式
+```bash
+# 构建多平台镜像（本地 + 推送）
+./scripts/docker/build-multiarch.sh
+
+# 或分开执行
+./scripts/docker/build-multiarch.sh --load    # 仅本地构建
+./scripts/docker/push.sh                       # 手动推送
+```
+
+### 技术细节
+- 使用 `docker buildx` 实现跨平台构建
+- 使用 Docker manifest 实现多架构支持
+- Docker 会根据宿主机架构自动选择合适的镜像
+
+---
+
 ## ✅ 1. 初始版本 + Docker 支持
 
 ### 新增功能
