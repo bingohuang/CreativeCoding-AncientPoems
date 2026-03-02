@@ -47,17 +47,17 @@ echo "📋 本地镜像信息:"
 docker images | grep "${IMAGE_NAME}" | grep -E "${VERSION}|latest" || true
 
 # 检查是否已登录 Docker Hub
-echo ""
-echo "🔑 检查 Docker Hub 登录状态..."
-DOCKER_USER=$(docker info 2>/dev/null | grep -i "username" | awk '{print $2}')
-if [ -z "$DOCKER_USER" ]; then
-    echo "⚠️  未检测到 Docker Hub 登录状态"
-    echo ""
-    echo "请先登录 Docker Hub:"
-    echo "   docker login"
-    exit 1
-fi
-echo "✅ 已登录 Docker Hub (用户: ${DOCKER_USER})"
+# echo ""
+# echo "🔑 检查 Docker Hub 登录状态..."
+# DOCKER_USER=$(docker info 2>/dev/null | grep -i "username" | awk '{print $2}')
+# if [ -z "$DOCKER_USER" ]; then
+#     echo "⚠️  未检测到 Docker Hub 登录状态"
+#     echo ""
+#     echo "请先登录 Docker Hub:"
+#     echo "   docker login"
+#     exit 1
+# fi
+# echo "✅ 已登录 Docker Hub (用户: ${DOCKER_USER})"
 
 # 提示用户确认
 echo ""
