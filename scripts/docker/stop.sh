@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# 趣味背古诗 - Docker 容器停止脚本
+
+set -e
+
+# 配置
+CONTAINER_NAME="ancient-poems"
+
+echo "=========================================="
+echo "🐳 Docker 容器停止"
+echo "=========================================="
+echo "📛 容器: ${CONTAINER_NAME}"
+echo "=========================================="
+
+# 检查容器是否存在
+echo ""
+echo "🔍 检查容器状态..."
+
+if ! docker ps -a | grep -q "${CONTAINER_NAME}"; then
+    echo "⚠️  容器 ${CONTAINER_NAME} 不存在"
+    exit 0
+fi
+
+# 检查容器是否正在运行
+if docker ps | grep -q "${CONTAINER_NAME}"; then
+    echo "🛑 停止运行中的容器..."
+    docker stop "${CONTAINER_NAME}"
+    echo "✅ 容器已停止"
+else
+    echo "ℹ️  容器已经处于停止状态"
+fi
+
+# 询问是否删除容器
+echo ""
+# 检查是否是交互式终端
+if [ -t 0 ]; then
+    read -p "是否删除容器? (y/n): " answer
+    if [ "$answer" = "y" ] || [ "$answer" = "Y" ]; then
+        REMOVE_CONTAINER=true
+    else
+        REMOVE_CONTAINER=false
+    fi
+else
+    echo "ℹ️  非交互式终端，自动删除容器..."
+    REMOVE_CONTAINER=true
+fi
+
+if [ "$REMOVE_CONTAINER" = "true" ]; then
+    echo "🗑️  删除容器..."
+    docker rm "${CONTAINER_NAME}"
+    echo "✅ 容器已删除"
+else
+    echo "ℹ️  保留容器（可使用 ./start.sh 重新启动）"
+fi
+
+echo ""
+echo "📋 完成！"
