@@ -43,3 +43,6 @@ coverage
 
 # TypeScript
 *.tsbuildinfo
+
+# pdf
+*.pdf
